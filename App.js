@@ -8,12 +8,22 @@ import {
 } from 'react-native';
 import Expo from 'expo';
 
+const JerryWav = './assests/Jerry1.wav';
+const WadeWav = './assests/Wade1.wav';
+
+const JerryPNG = './assests/Jerry1.png';
+const WadePNG = './assests/Wade1.png';
+
 export default class App extends React.Component {
 
-  async playSound(){
+  async playSound(name){
     const soundObject = new Expo.Audio.Sound();
     try {
-      await soundObject.loadAsync(require('./assests/Jerry1.wav'));
+      if(name === 'Jerry'){
+        await soundObject.loadAsync(require('./assests/Jerry1.wav'));
+      } else if(name === 'Wade'){
+        await soundObject.loadAsync(require('./assests/Wade1.wav'));
+      }
       await soundObject.playAsync();
       console.log("done playing");
     } catch(error) {
@@ -26,7 +36,7 @@ export default class App extends React.Component {
     return (
       <View style={styles.container}>
         <TouchableOpacity
-          onPress={() => this.playSound()}
+          onPress={() => this.playSound('Jerry')}
         >
           <Image
             style={{
@@ -34,6 +44,18 @@ export default class App extends React.Component {
               height: 100
             }}
             source={require('./assests/Jerry1.png')}
+          />
+        </TouchableOpacity>
+        <View style={{width: 10}}/>
+        <TouchableOpacity
+          onPress={() => this.playSound('Wade')}
+        >
+          <Image
+            style={{
+              width: 100,
+              height: 100
+            }}
+            source={require('./assests/Wade1.png')}
           />
         </TouchableOpacity>
       </View>
@@ -47,6 +69,7 @@ const styles = StyleSheet.create({
     backgroundColor: '#fff',
     alignItems: 'flex-start',
     justifyContent: 'flex-start',
-    padding: 30
+    padding: 30,
+    flexDirection: 'row'
   },
 });
